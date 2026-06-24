@@ -1,0 +1,244 @@
+/* ============================================================
+   AETHER CLOCK — components.css
+   再利用可能なUIコンポーネント
+   ============================================================ */
+
+/* ---- ブランド ---- */
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+.brand__icon {
+    display: grid;
+    place-items: center;
+    width: 38px;
+    height: 38px;
+    border-radius: 11px;
+    background: linear-gradient(135deg, var(--accent), var(--accent-2));
+    color: #fff;
+    font-size: 18px;
+    box-shadow: 0 0 24px var(--accent-glow);
+    animation: spinSlow 12s linear infinite;
+}
+.brand__name {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 19px;
+    letter-spacing: 0.14em;
+    color: var(--text);
+}
+.brand__accent {
+    color: var(--accent);
+    text-shadow: 0 0 18px var(--accent-glow);
+}
+
+/* ---- ナビゲーション ---- */
+.hud-nav {
+    display: flex;
+    gap: 6px;
+    padding: 5px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    box-shadow: inset 0 0 20px rgba(0,0,0,0.3);
+}
+.hud-nav__btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 9px 16px;
+    border-radius: 10px;
+    font-family: var(--font-display);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    color: var(--text-dim);
+    transition: all var(--t-fast) var(--ease-out);
+    position: relative;
+    overflow: hidden;
+}
+.hud-nav__btn i { font-size: 14px; }
+.hud-nav__btn:hover {
+    color: var(--text);
+    background: rgba(255,255,255,0.04);
+}
+.hud-nav__btn.is-active {
+    color: #fff;
+    background: linear-gradient(135deg, var(--accent), var(--accent-2));
+    box-shadow: 0 4px 18px var(--accent-glow);
+}
+.hud-nav__btn.is-active::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(120deg, transparent 30%, rgba(255,255,255,0.3), transparent 70%);
+    transform: translateX(-100%);
+    animation: shimmer 2.5s ease-in-out infinite;
+}
+
+/* ---- アイコンボタン ---- */
+.icon-btn {
+    display: grid;
+    place-items: center;
+    width: 42px;
+    height: 42px;
+    border-radius: 12px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    color: var(--text-dim);
+    font-size: 16px;
+    transition: all var(--t-fast) var(--ease-out);
+}
+.icon-btn:hover {
+    color: var(--accent);
+    border-color: var(--border-strong);
+    background: var(--surface-strong);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.4);
+}
+.icon-btn:active { transform: translateY(0) scale(0.96); }
+.icon-btn.is-active {
+    color: var(--accent);
+    border-color: var(--accent);
+    box-shadow: 0 0 18px var(--accent-glow);
+}
+
+/* ---- チップボタン ---- */
+.chip-btn {
+    display: grid;
+    place-items: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    color: var(--text-dim);
+    transition: all var(--t-fast) var(--ease-out);
+}
+.chip-btn:hover {
+    color: var(--accent);
+    transform: scale(1.12) rotate(8deg);
+    box-shadow: 0 0 16px var(--accent-glow);
+}
+
+/* ---- 情報カード ---- */
+.info-card {
+    min-width: 160px;
+    padding: 12px 16px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    position: relative;
+    overflow: hidden;
+    transition: border-color var(--t-fast), transform var(--t-fast) var(--ease-out);
+}
+.info-card::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 3px;
+    background: linear-gradient(var(--accent), var(--accent-2));
+    box-shadow: 0 0 12px var(--accent-glow);
+}
+.info-card:hover {
+    border-color: var(--border-strong);
+    transform: translateX(2px);
+}
+.side-info--right .info-card { text-align: right; }
+.side-info--right .info-card::before { left: auto; right: 0; }
+.info-card__label {
+    font-family: var(--font-display);
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 0.22em;
+    color: var(--text-faint);
+}
+.info-card__value {
+    font-family: var(--font-digital);
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--text);
+    letter-spacing: 0.04em;
+}
+.info-card__value i { color: var(--accent); margin-right: 4px; }
+
+/* マイクロバー */
+.micro-bars {
+    display: flex;
+    gap: 3px;
+    align-items: flex-end;
+    height: 26px;
+}
+.micro-bars span {
+    flex: 1;
+    background: linear-gradient(to top, var(--accent), var(--accent-2));
+    border-radius: 2px;
+    height: 20%;
+    transition: height 0.2s var(--ease-out);
+    box-shadow: 0 0 6px var(--accent-glow);
+}
+
+/* リング進捗 */
+.ring-progress {
+    position: relative;
+    width: 64px;
+    height: 64px;
+}
+.ring-progress svg { width: 100%; height: 100%; transform: rotate(-90deg); }
+.ring-progress .rp-bg {
+    fill: none;
+    stroke: var(--border);
+    stroke-width: 6;
+}
+.ring-progress .rp-fg {
+    fill: none;
+    stroke: var(--accent);
+    stroke-width: 6;
+    stroke-linecap: round;
+    stroke-dasharray: 213.6;
+    stroke-dashoffset: 213.6;
+    filter: drop-shadow(0 0 6px var(--accent-glow));
+    transition: stroke-dashoffset 0.5s var(--ease-out);
+}
+.ring-progress__text {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    font-family: var(--font-digital);
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--accent);
+}
+
+/* ---- ティッカー ---- */
+.ticker {
+    flex: 1;
+    overflow: hidden;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+    -webkit-mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+}
+.ticker__track {
+    display: flex;
+    gap: 48px;
+    white-space: nowrap;
+    animation: tickerScroll 40s linear infinite;
+    font-family: var(--font-body);
+    font-size: 13px;
+    color: var(--text-dim);
+    letter-spacing: 0.05em;
+}
+.ticker__track span { display: inline-flex; align-items: center; gap: 8px; }
+.ticker__track b { color: var(--accent); font-family: var(--font-digital); }
+.ticker:hover .ticker__track { animation-play-state: paused; }
+
+.quick-tools { display: flex; gap: 8px; }

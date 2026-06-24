@@ -1,0 +1,130 @@
+/* ============================================================
+   AETHER CLOCK — themes.css
+   複数のビジュアルテーマ定義
+   各テーマは body.theme-XXX で適用される
+   ============================================================ */
+
+/* ---- AURORA (デフォルト: シアン×バイオレット) ---- */
+.theme-aurora {
+    --bg-deep: #05070f;
+    --bg-base: #0a0e1a;
+    --bg-soft: #121829;
+    --accent: #45d4ff;
+    --accent-2: #7c5cff;
+    --accent-3: #ff5ca8;
+    --accent-dim: rgba(69, 212, 255, 0.4);
+    --accent-glow: rgba(69, 212, 255, 0.7);
+    --hand-second: #45d4ff;
+}
+
+/* ---- SUNSET (オレンジ×ピンク) ---- */
+.theme-sunset {
+    --bg-deep: #160a07;
+    --bg-base: #1c0e0a;
+    --bg-soft: #2a160f;
+    --accent: #ff8a3c;
+    --accent-2: #ff4d6d;
+    --accent-3: #ffd166;
+    --accent-dim: rgba(255, 138, 60, 0.4);
+    --accent-glow: rgba(255, 138, 60, 0.7);
+    --hand-second: #ffd166;
+}
+
+/* ---- EMERALD (グリーン) ---- */
+.theme-emerald {
+    --bg-deep: #04110c;
+    --bg-base: #061811;
+    --bg-soft: #0a2419;
+    --accent: #2bffb0;
+    --accent-2: #00d4a0;
+    --accent-3: #aaff66;
+    --accent-dim: rgba(43, 255, 176, 0.36);
+    --accent-glow: rgba(43, 255, 176, 0.65);
+    --hand-second: #2bffb0;
+}
+
+/* ---- CRIMSON (レッド×ダーク) ---- */
+.theme-crimson {
+    --bg-deep: #0f0406;
+    --bg-base: #16060a;
+    --bg-soft: #240a10;
+    --accent: #ff3860;
+    --accent-2: #ff7849;
+    --accent-3: #ff145c;
+    --accent-dim: rgba(255, 56, 96, 0.4);
+    --accent-glow: rgba(255, 56, 96, 0.7);
+    --hand-second: #ff3860;
+}
+
+/* ---- MIDNIGHT (ディープブルー) ---- */
+.theme-midnight {
+    --bg-deep: #02040c;
+    --bg-base: #040814;
+    --bg-soft: #0a1226;
+    --accent: #5b8cff;
+    --accent-2: #3b5bdb;
+    --accent-3: #8ab4ff;
+    --accent-dim: rgba(91, 140, 255, 0.36);
+    --accent-glow: rgba(91, 140, 255, 0.62);
+    --hand-second: #8ab4ff;
+}
+
+/* ---- GOLD (高級感) ---- */
+.theme-gold {
+    --bg-deep: #0c0a04;
+    --bg-base: #131008;
+    --bg-soft: #1f1a0c;
+    --text: #fff7e0;
+    --accent: #ffd24a;
+    --accent-2: #d4a017;
+    --accent-3: #fff0a0;
+    --accent-dim: rgba(255, 210, 74, 0.36);
+    --accent-glow: rgba(255, 210, 74, 0.62);
+    --hand-second: #ffd24a;
+}
+
+/* ---- MONO (モノクロ・ミニマル) ---- */
+.theme-mono {
+    --bg-deep: #070707;
+    --bg-base: #0d0d0d;
+    --bg-soft: #161616;
+    --text: #f2f2f2;
+    --accent: #ffffff;
+    --accent-2: #b8b8b8;
+    --accent-3: #dddddd;
+    --accent-dim: rgba(255, 255, 255, 0.28);
+    --accent-glow: rgba(255, 255, 255, 0.5);
+    --hand-second: #ffffff;
+}
+
+/* ---- CYBERPUNK (マゼンタ×イエロー) ---- */
+.theme-cyberpunk {
+    --bg-deep: #0a0314;
+    --bg-base: #100620;
+    --bg-soft: #1a0c33;
+    --accent: #ff2bd6;
+    --accent-2: #00f0ff;
+    --accent-3: #fcff45;
+    --accent-dim: rgba(255, 43, 214, 0.4);
+    --accent-glow: rgba(255, 43, 214, 0.7);
+    --hand-second: #fcff45;
+}
+
+/* ---- ICE (クール・ホワイトブルー) ---- */
+.theme-ice {
+    --bg-deep: #060d14;
+    --bg-base: #0a141f;
+    --bg-soft: #122233;
+    --text: #eaf6ff;
+    --accent: #9fe8ff;
+    --accent-2: #5cc8ff;
+    --accent-3: #d6f5ff;
+    --accent-dim: rgba(159, 232, 255, 0.36);
+    --accent-glow: rgba(159, 232, 255, 0.6);
+    --hand-second: #9fe8ff;
+}
+
+/* テーマ切替時のグローバルトランジション */
+body {
+    transition: background var(--t-slow) ease;
+}

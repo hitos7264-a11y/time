@@ -1,0 +1,67 @@
+/* ============================================================
+   AETHER CLOCK — variables.css
+   グローバルなCSSカスタムプロパティ（デザイントークン）
+   ============================================================ */
+:root {
+    /* ---- フォント ---- */
+    --font-display: 'Orbitron', 'Rajdhani', sans-serif;
+    --font-digital: 'Orbitron', monospace;
+    --font-body: 'Exo 2', 'Noto Sans JP', sans-serif;
+    --font-mono: 'Major Mono Display', monospace;
+
+    /* ---- ベースカラー (テーマで上書き) ---- */
+    --bg-deep: #05070f;
+    --bg-base: #0a0e1a;
+    --bg-soft: #121829;
+    --surface: rgba(20, 28, 48, 0.55);
+    --surface-strong: rgba(24, 34, 58, 0.85);
+    --border: rgba(120, 170, 255, 0.14);
+    --border-strong: rgba(120, 170, 255, 0.32);
+
+    /* ---- テキスト ---- */
+    --text: #e8f0ff;
+    --text-dim: #9fb0d0;
+    --text-faint: #586480;
+
+    /* ---- アクセント (テーマで上書き) ---- */
+    --accent: #45d4ff;
+    --accent-2: #7c5cff;
+    --accent-3: #ff5ca8;
+    --accent-dim: rgba(69, 212, 255, 0.4);
+    --accent-glow: rgba(69, 212, 255, 0.75);
+
+    /* ---- 時計の針 ---- */
+    --hand-hour: #e8f0ff;
+    --hand-minute: #c0d4ff;
+    --hand-second: var(--accent);
+
+    /* ---- エフェクト ---- */
+    --glow-intensity: 1;
+    --blur-glass: 18px;
+
+    /* ---- レイアウト ---- */
+    --hud-height: 64px;
+    --radius-sm: 8px;
+    --radius-md: 14px;
+    --radius-lg: 24px;
+    --radius-xl: 32px;
+
+    /* ---- シャドウ ---- */
+    --shadow-soft: 0 8px 40px rgba(0, 0, 0, 0.5);
+    --shadow-glow: 0 0 60px var(--accent-glow);
+
+    /* ---- z-index 階層 ---- */
+    --z-bg: 0;
+    --z-stage: 10;
+    --z-hud: 100;
+    --z-panel: 500;
+    --z-scrim: 450;
+    --z-loading: 9999;
+
+    /* ---- トランジション ---- */
+    --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+    --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+    --t-fast: 0.18s;
+    --t-med: 0.36s;
+    --t-slow: 0.6s;
+}

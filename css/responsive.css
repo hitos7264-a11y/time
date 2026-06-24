@@ -1,0 +1,54 @@
+/* ============================================================
+   AETHER CLOCK — responsive.css
+   PC表示専用サイト。画面幅に応じたスケール調整。
+   ============================================================ */
+
+/* 大型ディスプレイ */
+@media (min-width: 1800px) {
+    .analog-clock { width: 560px; height: 560px; }
+    .analog-clock canvas { width: 560px; height: 560px; }
+    body[data-clock-mode="digital"] .digital-time { font-size: 260px; }
+    .stage { grid-template-columns: 280px 1fr 280px; }
+}
+
+/* 中型 */
+@media (max-width: 1400px) {
+    .stage { grid-template-columns: 200px 1fr 200px; padding-left: 28px; padding-right: 28px; }
+    .info-card { min-width: 140px; }
+}
+
+@media (max-width: 1200px) {
+    .analog-clock { width: 400px; height: 400px; }
+    .analog-clock canvas { width: 400px; height: 400px; }
+    .hud-nav__btn span { display: none; }
+    .hud-nav__btn { padding: 9px 12px; }
+}
+
+@media (max-width: 1024px) {
+    .stage { grid-template-columns: 1fr; }
+    .side-info { display: none; }
+}
+
+/* PC専用注意書き (小画面) */
+.mobile-warning {
+    display: none;
+}
+@media (max-width: 768px) {
+    .stage, .hud-bar, .side-info, .kbd-hints { display: none !important; }
+    .mobile-warning {
+        display: flex;
+        position: fixed;
+        inset: 0;
+        z-index: 99999;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 18px;
+        text-align: center;
+        padding: 40px;
+        background: var(--bg-deep);
+    }
+    .mobile-warning i { font-size: 56px; color: var(--accent); }
+    .mobile-warning h2 { font-family: var(--font-display); font-size: 22px; letter-spacing: 0.08em; }
+    .mobile-warning p { color: var(--text-dim); font-size: 14px; max-width: 320px; }
+}

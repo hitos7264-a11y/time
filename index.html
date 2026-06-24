@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="超高クオリティーなリアルタイム時計表示サイト - AETHER CLOCK">
+    <meta name="author" content="AETHER CLOCK">
+    <meta name="theme-color" content="#0a0e1a">
+    <title>AETHER CLOCK — 究極のリアルタイム時計</title>
+
+    <!-- Preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdn.jsdelivr.net">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Rajdhani:wght@300;400;500;600;700&family=Exo+2:wght@100;200;300;400;500;600;700&family=Noto+Sans+JP:wght@300;400;500;700&family=Major+Mono+Display&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css">
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/variables.css">
+    <link rel="stylesheet" href="css/layout.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/clock-analog.css">
+    <link rel="stylesheet" href="css/clock-digital.css">
+    <link rel="stylesheet" href="css/panels.css">
+    <link rel="stylesheet" href="css/animations.css">
+    <link rel="stylesheet" href="css/themes.css">
+    <link rel="stylesheet" href="css/effects.css">
+    <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body class="theme-aurora" data-clock-mode="hybrid">
+
+    <!-- ============ Loading Screen ============ -->
+    <div id="loading-screen" class="loading-screen" aria-hidden="true">
+        <div class="loader-core">
+            <div class="loader-ring loader-ring--1"></div>
+            <div class="loader-ring loader-ring--2"></div>
+            <div class="loader-ring loader-ring--3"></div>
+            <div class="loader-dot"></div>
+        </div>
+        <div class="loader-text">
+            <span class="loader-title">AETHER</span>
+            <span class="loader-subtitle">CLOCK SYSTEM</span>
+        </div>
+        <div class="loader-progress">
+            <div class="loader-progress__bar" id="loader-bar"></div>
+        </div>
+        <div class="loader-status" id="loader-status">INITIALIZING...</div>
+    </div>
+
+    <!-- ============ Background Layers ============ -->
+    <div class="background-stack" aria-hidden="true">
+        <canvas id="bg-particles" class="bg-canvas bg-canvas--particles"></canvas>
+        <canvas id="bg-aurora" class="bg-canvas bg-canvas--aurora"></canvas>
+        <div class="bg-gradient-overlay"></div>
+        <div class="bg-grid"></div>
+        <div class="bg-vignette"></div>
+        <div class="bg-noise"></div>
+    </div>
+
+    <!-- ============ Top HUD Bar ============ -->
+    <header class="hud-bar hud-bar--top" id="hud-top">
+        <div class="hud-bar__left">
+            <div class="brand">
+                <span class="brand__icon"><i class="fa-solid fa-atom"></i></span>
+                <span class="brand__name">AETHER<span class="brand__accent">CLOCK</span></span>
+            </div>
+        </div>
+        <nav class="hud-nav" aria-label="表示モード">
+            <button class="hud-nav__btn is-active" data-mode="hybrid" title="ハイブリッド">
+                <i class="fa-solid fa-layer-group"></i><span>HYBRID</span>
+            </button>
+            <button class="hud-nav__btn" data-mode="analog" title="アナログ">
+                <i class="fa-solid fa-clock"></i><span>ANALOG</span>
+            </button>
+            <button class="hud-nav__btn" data-mode="digital" title="デジタル">
+                <i class="fa-solid fa-stopwatch-20"></i><span>DIGITAL</span>
+            </button>
+            <button class="hud-nav__btn" data-mode="binary" title="バイナリ">
+                <i class="fa-solid fa-microchip"></i><span>BINARY</span>
+            </button>
+            <button class="hud-nav__btn" data-mode="word" title="ワードクロック">
+                <i class="fa-solid fa-font"></i><span>WORD</span>
+            </button>
+        </nav>
+        <div class="hud-bar__right">
+            <button class="icon-btn" id="btn-fullscreen" title="フルスクリーン">
+                <i class="fa-solid fa-expand"></i>
+            </button>
+            <button class="icon-btn" id="btn-sound" title="サウンド">
+                <i class="fa-solid fa-volume-xmark"></i>
+            </button>
+            <button class="icon-btn" id="btn-settings" title="設定">
+                <i class="fa-solid fa-sliders"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- ============ Main Stage ============ -->
+    <main class="stage" id="stage">
+
+        <!-- Floating side info: left -->
+        <aside class="side-info side-info--left" aria-label="システム情報">
+            <div class="info-card">
+                <span class="info-card__label">SYSTEM TIME</span>
+                <span class="info-card__value" id="info-systime">--:--:--</span>
+            </div>
+            <div class="info-card">
+                <span class="info-card__label">FRAME RATE</span>
+                <span class="info-card__value" id="info-fps">-- FPS</span>
+            </div>
+            <div class="info-card">
+                <span class="info-card__label">UPTIME</span>
+                <span class="info-card__value" id="info-uptime">00:00:00</span>
+            </div>
+            <div class="info-card info-card--bars">
+                <span class="info-card__label">PRECISION</span>
+                <div class="micro-bars" id="micro-bars">
+                    <span></span><span></span><span></span><span></span><span></span>
+                    <span></span><span></span><span></span><span></span><span></span>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Center clock cluster -->
+        <section class="clock-cluster" id="clock-cluster">
+
+            <!-- ANALOG CLOCK -->
+            <div class="clock-stage clock-stage--analog" id="analog-stage">
+                <div class="analog-clock" id="analog-clock">
+                    <canvas id="analog-canvas" width="640" height="640" aria-label="アナログ時計"></canvas>
+                    <div class="analog-glow"></div>
+                </div>
+            </div>
+
+            <!-- DIGITAL CLOCK -->
+            <div class="clock-stage clock-stage--digital" id="digital-stage">
+                <div class="digital-clock" id="digital-clock">
+                    <div class="digital-date" id="digital-date">----年--月--日 (-)</div>
+                    <div class="digital-time" id="digital-time">
+                        <span class="dt-group" data-unit="hours">
+                            <span class="dt-digit" data-d="h1">0</span><span class="dt-digit" data-d="h2">0</span>
+                        </span>
+                        <span class="dt-sep" aria-hidden="true">:</span>
+                        <span class="dt-group" data-unit="minutes">
+                            <span class="dt-digit" data-d="m1">0</span><span class="dt-digit" data-d="m2">0</span>
+                        </span>
+                        <span class="dt-sep" aria-hidden="true">:</span>
+                        <span class="dt-group" data-unit="seconds">
+                            <span class="dt-digit" data-d="s1">0</span><span class="dt-digit" data-d="s2">0</span>
+                        </span>
+                        <span class="dt-ms" id="digital-ms">.000</span>
+                    </div>
+                    <div class="digital-meta">
+                        <span class="digital-ampm" id="digital-ampm">AM</span>
+                        <span class="digital-tz" id="digital-tz">JST · UTC+09:00</span>
+                        <span class="digital-week" id="digital-week">WEEK --</span>
+                    </div>
+                    <div class="digital-progress-row" id="digital-progress-row"></div>
+                </div>
+            </div>
+
+            <!-- BINARY CLOCK -->
+            <div class="clock-stage clock-stage--binary" id="binary-stage">
+                <div class="binary-clock" id="binary-clock"></div>
+                <div class="binary-legend">BINARY CODED · H · M · S</div>
+            </div>
+
+            <!-- WORD CLOCK -->
+            <div class="clock-stage clock-stage--word" id="word-stage">
+                <div class="word-clock" id="word-clock"></div>
+            </div>
+
+        </section>
+
+        <!-- Floating side info: right -->
+        <aside class="side-info side-info--right" aria-label="天体・暦情報">
+            <div class="info-card">
+                <span class="info-card__label">DAY PROGRESS</span>
+                <div class="ring-progress" data-ring="day">
+                    <svg viewBox="0 0 80 80"><circle class="rp-bg" cx="40" cy="40" r="34"/><circle class="rp-fg" cx="40" cy="40" r="34"/></svg>
+                    <span class="ring-progress__text" id="day-progress-text">0%</span>
+                </div>
+            </div>
+            <div class="info-card">
+                <span class="info-card__label">SUN</span>
+                <span class="info-card__value" id="info-sun"><i class="fa-solid fa-sun"></i> --:--</span>
+            </div>
+            <div class="info-card">
+                <span class="info-card__label">MOON PHASE</span>
+                <span class="info-card__value" id="info-moon">🌑 New</span>
+            </div>
+            <div class="info-card">
+                <span class="info-card__label">SEASON</span>
+                <span class="info-card__value" id="info-season">--</span>
+            </div>
+        </aside>
+
+    </main>
+
+    <!-- ============ Bottom HUD ============ -->
+    <footer class="hud-bar hud-bar--bottom" id="hud-bottom">
+        <div class="ticker" id="ticker">
+            <div class="ticker__track" id="ticker-track"></div>
+        </div>
+        <div class="quick-tools">
+            <button class="chip-btn" id="btn-stopwatch" title="ストップウォッチ"><i class="fa-solid fa-stopwatch"></i></button>
+            <button class="chip-btn" id="btn-timer" title="タイマー"><i class="fa-solid fa-hourglass-half"></i></button>
+            <button class="chip-btn" id="btn-worldclock" title="世界時計"><i class="fa-solid fa-globe"></i></button>
+        </div>
+    </footer>
+
+    <!-- ============ Settings Panel ============ -->
+    <div class="overlay-scrim" id="overlay-scrim"></div>
+
+    <section class="settings-panel" id="settings-panel" aria-label="設定パネル" aria-hidden="true">
+        <header class="settings-panel__head">
+            <h2><i class="fa-solid fa-sliders"></i> SETTINGS</h2>
+            <button class="icon-btn" id="btn-close-settings"><i class="fa-solid fa-xmark"></i></button>
+        </header>
+        <div class="settings-panel__body">
+
+            <div class="settings-group">
+                <h3 class="settings-group__title">テーマ</h3>
+                <div class="theme-grid" id="theme-grid"></div>
+            </div>
+
+            <div class="settings-group">
+                <h3 class="settings-group__title">表示オプション</h3>
+                <label class="switch-row">
+                    <span>秒針スムーズスイープ</span>
+                    <span class="switch"><input type="checkbox" id="opt-sweep" checked><span class="switch__track"></span></span>
+                </label>
+                <label class="switch-row">
+                    <span>ミリ秒表示</span>
+                    <span class="switch"><input type="checkbox" id="opt-ms" checked><span class="switch__track"></span></span>
+                </label>
+                <label class="switch-row">
+                    <span>24時間表記</span>
+                    <span class="switch"><input type="checkbox" id="opt-24h" checked><span class="switch__track"></span></span>
+                </label>
+                <label class="switch-row">
+                    <span>パーティクル背景</span>
+                    <span class="switch"><input type="checkbox" id="opt-particles" checked><span class="switch__track"></span></span>
+                </label>
+                <label class="switch-row">
+                    <span>オーロラ背景</span>
+                    <span class="switch"><input type="checkbox" id="opt-aurora" checked><span class="switch__track"></span></span>
+                </label>
+                <label class="switch-row">
+                    <span>グリッチエフェクト</span>
+                    <span class="switch"><input type="checkbox" id="opt-glitch"><span class="switch__track"></span></span>
+                </label>
+                <label class="switch-row">
+                    <span>ティックサウンド</span>
+                    <span class="switch"><input type="checkbox" id="opt-tick"><span class="switch__track"></span></span>
+                </label>
+            </div>
+
+            <div class="settings-group">
+                <h3 class="settings-group__title">タイムゾーン</h3>
+                <select class="select-field" id="opt-timezone"></select>
+            </div>
+
+            <div class="settings-group">
+                <h3 class="settings-group__title">背景強度</h3>
+                <label class="range-row">
+                    <span>粒子密度 <em id="val-density">100</em></span>
+                    <input type="range" id="opt-density" min="20" max="300" value="120">
+                </label>
+                <label class="range-row">
+                    <span>発光強度 <em id="val-glow">100</em></span>
+                    <input type="range" id="opt-glow" min="0" max="200" value="100">
+                </label>
+            </div>
+
+            <div class="settings-group">
+                <button class="big-btn" id="btn-reset"><i class="fa-solid fa-rotate-left"></i> デフォルトに戻す</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============ Stopwatch Panel ============ -->
+    <section class="tool-panel" id="stopwatch-panel" aria-hidden="true">
+        <header class="tool-panel__head">
+            <h2><i class="fa-solid fa-stopwatch"></i> STOPWATCH</h2>
+            <button class="icon-btn" data-close-tool><i class="fa-solid fa-xmark"></i></button>
+        </header>
+        <div class="tool-panel__body">
+            <div class="sw-display" id="sw-display">00:00:00.000</div>
+            <div class="sw-controls">
+                <button class="big-btn big-btn--primary" id="sw-start"><i class="fa-solid fa-play"></i> START</button>
+                <button class="big-btn" id="sw-lap"><i class="fa-solid fa-flag"></i> LAP</button>
+                <button class="big-btn" id="sw-reset"><i class="fa-solid fa-rotate-left"></i> RESET</button>
+            </div>
+            <ol class="sw-laps" id="sw-laps"></ol>
+        </div>
+    </section>
+
+    <!-- ============ Timer Panel ============ -->
+    <section class="tool-panel" id="timer-panel" aria-hidden="true">
+        <header class="tool-panel__head">
+            <h2><i class="fa-solid fa-hourglass-half"></i> TIMER</h2>
+            <button class="icon-btn" data-close-tool><i class="fa-solid fa-xmark"></i></button>
+        </header>
+        <div class="tool-panel__body">
+            <div class="timer-display" id="timer-display">00:05:00</div>
+            <div class="timer-inputs">
+                <input type="number" id="timer-h" min="0" max="23" value="0" aria-label="時"><span>:</span>
+                <input type="number" id="timer-m" min="0" max="59" value="5" aria-label="分"><span>:</span>
+                <input type="number" id="timer-s" min="0" max="59" value="0" aria-label="秒">
+            </div>
+            <div class="timer-presets" id="timer-presets"></div>
+            <div class="sw-controls">
+                <button class="big-btn big-btn--primary" id="timer-start"><i class="fa-solid fa-play"></i> START</button>
+                <button class="big-btn" id="timer-reset"><i class="fa-solid fa-rotate-left"></i> RESET</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============ World Clock Panel ============ -->
+    <section class="tool-panel tool-panel--wide" id="worldclock-panel" aria-hidden="true">
+        <header class="tool-panel__head">
+            <h2><i class="fa-solid fa-globe"></i> WORLD CLOCK</h2>
+            <button class="icon-btn" data-close-tool><i class="fa-solid fa-xmark"></i></button>
+        </header>
+        <div class="tool-panel__body">
+            <div class="world-grid" id="world-grid"></div>
+        </div>
+    </section>
+
+    <!-- ============ Keyboard Hints ============ -->
+    <div class="kbd-hints" id="kbd-hints">
+        <span><kbd>F</kbd> 全画面</span>
+        <span><kbd>1-5</kbd> モード</span>
+        <span><kbd>S</kbd> 設定</span>
+        <span><kbd>T</kbd> テーマ</span>
+        <span><kbd>H</kbd> HUD</span>
+    </div>
+
+    <!-- ============ Scripts ============ -->
+    <script src="js/utils/math.js"></script>
+    <script src="js/utils/time.js"></script>
+    <script src="js/utils/dom.js"></script>
+    <script src="js/utils/storage.js"></script>
+    <script src="js/core/state.js"></script>
+    <script src="js/core/events.js"></script>
+    <script src="js/data/timezones.js"></script>
+    <script src="js/data/themes.js"></script>
+    <script src="js/astro/astronomy.js"></script>
+    <script src="js/clocks/analog.js"></script>
+    <script src="js/clocks/digital.js"></script>
+    <script src="js/clocks/binary.js"></script>
+    <script src="js/clocks/word.js"></script>
+    <script src="js/background/particles.js"></script>
+    <script src="js/background/aurora.js"></script>
+    <script src="js/ui/panels.js"></script>
+    <script src="js/ui/settings.js"></script>
+    <script src="js/ui/sidebar.js"></script>
+    <script src="js/tools/stopwatch.js"></script>
+    <script src="js/tools/timer.js"></script>
+    <script src="js/tools/worldclock.js"></script>
+    <script src="js/audio/sound.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>

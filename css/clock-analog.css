@@ -1,0 +1,48 @@
+/* ============================================================
+   AETHER CLOCK — clock-analog.css
+   アナログ時計のスタイル
+   ============================================================ */
+.analog-clock {
+    position: relative;
+    width: 480px;
+    height: 480px;
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    transition: width var(--t-med) var(--ease-out), height var(--t-med) var(--ease-out);
+}
+.analog-clock canvas {
+    width: 480px;
+    height: 480px;
+    border-radius: 50%;
+    position: relative;
+    z-index: 2;
+    transition: width var(--t-med) var(--ease-out), height var(--t-med) var(--ease-out);
+    filter: drop-shadow(0 10px 40px rgba(0,0,0,0.6));
+}
+.analog-glow {
+    position: absolute;
+    inset: -8%;
+    border-radius: 50%;
+    background: radial-gradient(circle, var(--accent-dim) 0%, transparent 65%);
+    opacity: calc(0.55 * var(--glow-intensity));
+    z-index: 1;
+    animation: breathe 6s ease-in-out infinite;
+    pointer-events: none;
+}
+.analog-clock::before {
+    /* 外周リング */
+    content: '';
+    position: absolute;
+    inset: -2%;
+    border-radius: 50%;
+    background:
+        conic-gradient(from 0deg,
+            transparent, var(--accent-dim) 12%, transparent 24%,
+            transparent 50%, var(--accent-dim) 62%, transparent 74%);
+    opacity: 0.5;
+    animation: spinSlow 24s linear infinite reverse;
+    z-index: 0;
+    -webkit-mask: radial-gradient(circle, transparent 60%, #000 61%, #000 64%, transparent 65%);
+    mask: radial-gradient(circle, transparent 60%, #000 61%, #000 64%, transparent 65%);
+}

@@ -1,0 +1,132 @@
+/* ============================================================
+   AETHER CLOCK — clock-digital.css
+   デジタル時計のスタイル
+   ============================================================ */
+.digital-clock {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 18px;
+    text-align: center;
+}
+
+.digital-date {
+    font-family: var(--font-body);
+    font-size: 20px;
+    font-weight: 400;
+    letter-spacing: 0.28em;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    padding-left: 0.28em;
+}
+
+.digital-time {
+    display: flex;
+    align-items: baseline;
+    gap: 4px;
+    font-family: var(--font-digital);
+    font-weight: 800;
+    line-height: 1;
+}
+
+body[data-clock-mode="digital"] .digital-time { font-size: clamp(72px, 14vw, 220px); }
+body[data-clock-mode="hybrid"]  .digital-time { font-size: clamp(48px, 7vw, 110px); }
+
+.dt-group {
+    display: inline-flex;
+    position: relative;
+}
+.dt-digit {
+    display: inline-block;
+    min-width: 0.62em;
+    text-align: center;
+    color: var(--text);
+    background: linear-gradient(180deg, var(--text) 0%, var(--accent) 130%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 0 0 calc(40px * var(--glow-intensity)) var(--accent-glow);
+    transition: transform 0.3s var(--ease-spring);
+    position: relative;
+}
+.dt-digit.flip {
+    animation: digitFlip 0.4s var(--ease-out);
+}
+.dt-sep {
+    color: var(--accent);
+    opacity: 0.85;
+    text-shadow: 0 0 30px var(--accent-glow);
+    animation: blinkSep 1s steps(1) infinite;
+    padding: 0 2px;
+}
+.dt-ms {
+    font-size: 0.32em;
+    color: var(--accent);
+    opacity: 0.8;
+    align-self: flex-end;
+    margin-bottom: 0.4em;
+    margin-left: 6px;
+    min-width: 2.2em;
+    text-align: left;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+}
+
+.digital-meta {
+    display: flex;
+    gap: 22px;
+    align-items: center;
+    font-family: var(--font-display);
+    font-size: 13px;
+    letter-spacing: 0.14em;
+    color: var(--text-dim);
+}
+.digital-ampm {
+    padding: 4px 12px;
+    border: 1px solid var(--border-strong);
+    border-radius: 20px;
+    color: var(--accent);
+    font-weight: 600;
+    box-shadow: inset 0 0 12px var(--accent-dim);
+}
+.digital-tz { color: var(--text-faint); }
+.digital-week { color: var(--text-faint); }
+
+/* デジタル進捗バー (時/分/秒) */
+.digital-progress-row {
+    display: flex;
+    gap: 16px;
+    margin-top: 6px;
+}
+.dp-item {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    width: 110px;
+}
+.dp-item__head {
+    display: flex;
+    justify-content: space-between;
+    font-family: var(--font-display);
+    font-size: 9px;
+    letter-spacing: 0.16em;
+    color: var(--text-faint);
+}
+.dp-item__head b { color: var(--accent); font-family: var(--font-digital); }
+.dp-bar {
+    height: 5px;
+    background: var(--border);
+    border-radius: 3px;
+    overflow: hidden;
+}
+.dp-bar__fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--accent), var(--accent-2));
+    border-radius: 3px;
+    box-shadow: 0 0 8px var(--accent-glow);
+    transition: width 0.3s var(--ease-out);
+}
+
+/* ハイブリッドではメタを少し圧縮 */
+body[data-clock-mode="hybrid"] .digital-progress-row { display: none; }
+body[data-clock-mode="hybrid"] .digital-date { font-size: 16px; }
